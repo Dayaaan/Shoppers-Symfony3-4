@@ -1,0 +1,4 @@
+boutique_produits:
+    resource: "@BoutiqueProduitsBundle/Controller/"
+    type:     annotation
+    prefix:   /

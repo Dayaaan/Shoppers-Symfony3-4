@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Produitcommande</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ produitCommande.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ produitCommande.quantity }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ produitCommande.price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('produitcommande_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('produitcommande_edit', { 'id': produitCommande.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

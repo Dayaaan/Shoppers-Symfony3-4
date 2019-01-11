@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Imageprincipales list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Path</th>
+                <th>Alt</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for imagePrincipale in imagePrincipales %}
+            <tr>
+                <td><a href="{{ path('imageprincipale_show', { 'id': imagePrincipale.id }) }}">{{ imagePrincipale.id }}</a></td>
+                <td>{{ imagePrincipale.path }}</td>
+                <td>{{ imagePrincipale.alt }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('imageprincipale_show', { 'id': imagePrincipale.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('imageprincipale_edit', { 'id': imagePrincipale.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('imageprincipale_new') }}">Create a new imagePrincipale</a>
+        </li>
+    </ul>
+{% endblock %}
