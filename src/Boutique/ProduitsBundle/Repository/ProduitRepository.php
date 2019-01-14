@@ -10,4 +10,22 @@ namespace Boutique\ProduitsBundle\Repository;
  */
 class ProduitRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function sortProductByPrice() {
+
+
+        $query = $this->createQueryBuilder('p')
+                      ->orderBy('p.prix', 'ASC')
+                      ->getQuery();
+        return $query->execute();
+    }
+
+    public function sortProductByName($nom) {
+
+        $query = $this->createQueryBuilder('p')
+                      ->Where('p.nomProduit LIKE :nom' )
+                      ->setParameter('nom', '%' . $nom . '%')
+                      ->getQuery();
+        return $query->execute();
+
+    }
 }

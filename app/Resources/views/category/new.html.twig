@@ -1,16 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends('base.html.twig') %}
 
 {% block body %}
-    <h1>Category creation</h1>
+    <h2 class="h3 mb-3 text-black">Add product</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="p-3 p-lg-5 border">
+                    {{form_start(form)}}
+                        {{ form_widget(form) }}
+                        <input type="submit" value="Create" />
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+                    {{ form_end(form)}}
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('category_index') }}">Back to the list</a>
-        </li>
-    </ul>
-{% endblock %}
+  
+{% endblock body %}

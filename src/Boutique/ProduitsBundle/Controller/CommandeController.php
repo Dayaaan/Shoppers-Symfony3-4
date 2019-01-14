@@ -17,7 +17,7 @@ class CommandeController extends Controller
     /**
      * Lists all commande entities.
      *
-     * @Route("/", name="commande_index")
+     * @Route("/commande", name="commande_index")
      * @Method("GET")
      */
     public function indexAction()

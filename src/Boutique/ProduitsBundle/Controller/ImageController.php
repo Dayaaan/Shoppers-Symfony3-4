@@ -17,7 +17,7 @@ class ImageController extends Controller
     /**
      * Lists all image entities.
      *
-     * @Route("/", name="image_index")
+     * @Route("/image", name="image_index")
      * @Method("GET")
      */
     public function indexAction()

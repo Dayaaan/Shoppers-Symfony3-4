@@ -17,7 +17,7 @@ class ImagePrincipaleController extends Controller
     /**
      * Lists all imagePrincipale entities.
      *
-     * @Route("/", name="imageprincipale_index")
+     * @Route("/imageprincipale", name="imageprincipale_index")
      * @Method("GET")
      */
     public function indexAction()

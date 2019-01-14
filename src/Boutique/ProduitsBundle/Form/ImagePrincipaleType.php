@@ -5,6 +5,8 @@ namespace Boutique\ProduitsBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ImagePrincipaleType extends AbstractType
 {
@@ -13,7 +15,8 @@ class ImagePrincipaleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('path')->add('alt');
+        $builder->add('path', UrlType::class)
+                ->add('alt', TextType::class);
     }/**
      * {@inheritdoc}
      */

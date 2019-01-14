@@ -3,6 +3,8 @@
 namespace Boutique\ProduitsBundle\Controller;
 
 use Boutique\ProduitsBundle\Entity\Produit;
+use Boutique\ProduitsBundle\Entity\Category;
+use Boutique\ProduitsBundle\Form\ProduitType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +26,15 @@ class ProduitController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $produits = $em->getRepository('BoutiqueProduitsBundle:Produit')->findAll();
+        $products = $em->getRepository('BoutiqueProduitsBundle:Produit')->findAll();
+
+        $categories = $em->getRepository('BoutiqueProduitsBundle:Category')->findAll();
+
+        dump($categories);
 
         return $this->render('produit/index.html.twig', array(
-            'produits' => $produits,
+            'products' => $products,
+            'categories' => $categories
         ));
     }
 
@@ -40,8 +47,9 @@ class ProduitController extends Controller
     public function newAction(Request $request)
     {
         $produit = new Produit();
-        $form = $this->createForm('Boutique\ProduitsBundle\Form\ProduitType', $produit);
+        $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -53,7 +61,7 @@ class ProduitController extends Controller
 
         return $this->render('produit/new.html.twig', array(
             'produit' => $produit,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ));
     }
 
@@ -65,11 +73,17 @@ class ProduitController extends Controller
      */
     public function showAction(Produit $produit)
     {
-        $deleteForm = $this->createDeleteForm($produit);
+        $em = $this->getDoctrine()->getManager();
+
+        $categories = $em->getRepository('BoutiqueProduitsBundle:Category')->findAll();
+
+        $images = $produit->getImages();
+        var_dump($images);
+        exit;
 
         return $this->render('produit/show.html.twig', array(
             'produit' => $produit,
-            'delete_form' => $deleteForm->createView(),
+            'categories' => $categories
         ));
     }
 
@@ -133,4 +147,39 @@ class ProduitController extends Controller
             ->getForm()
         ;
     }
+
+     /**
+       * @Route("/searchproducts" , name="searchproducts")
+       */
+      //FORMULAIRE SEARCH
+      
+      public function searchProductsAction(Request $request) {
+
+        // $_GET parameters
+        //$request->query->get('name');
+
+        // $_POST parameters
+        // $request->request->get('name');
+
+            $em = $this->getDoctrine()->getManager();
+
+            //POST
+            $search = $request->request->get('search');
+
+            $products = $em->getRepository(Produit::class)->sortProductByName($search);
+
+            $categories = $em->getRepository(Category::class)->findAll();
+
+            return $this->render("produits/index.html.twig",
+                [
+                    'products' => $products,
+                    'categories' => $categories
+                ]
+            );
+
+            
+
+       }
+
+    
 }

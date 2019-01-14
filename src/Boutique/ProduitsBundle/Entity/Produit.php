@@ -32,7 +32,7 @@ class Produit
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="text")
      */
     private $description;
 
@@ -60,6 +60,11 @@ class Produit
      * @ORM\OneToOne(targetEntity="ImagePrincipale", cascade={"persist", "remove"})
      */
     private $imagePrincipale;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="produit", cascade={"persist","remove"})
+     */
+    private $images;
 
 
     /**
@@ -231,5 +236,39 @@ class Produit
     public function getImagePrincipale()
     {
         return $this->imagePrincipale;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \Boutique\ProduitsBundle\Entity\Image $image
+     *
+     * @return Produit
+     */
+    public function addImage(\Boutique\ProduitsBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \Boutique\ProduitsBundle\Entity\Image $image
+     */
+    public function removeImage(\Boutique\ProduitsBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

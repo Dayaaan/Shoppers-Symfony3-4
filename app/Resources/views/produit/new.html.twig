@@ -1,16 +1,70 @@
-{% extends 'base.html.twig' %}
+{% extends('base.html.twig') %}
 
 {% block body %}
-    <h1>Produit creation</h1>
+    <h2 class="h3 mb-3 text-black">Add category</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="p-3 p-lg-5 border">
+                    {{form_start(form)}}
+                        {{ form_label(form.name) }}
+                        {{ form_errors(form.name) }}
+                        {{ form_widget(form.name) }}
+                        {{ form_errors(form.name) }}
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('produit_index') }}">Back to the list</a>
-        </li>
-    </ul>
-{% endblock %}
+                        {{ form_label(form.description) }}
+                        {{ form_errors(form.description) }}
+                        {{ form_widget(form.description) }}
+
+
+                        {{ form_label(form.quantity) }}
+                        {{ form_errors(form.quantity) }}
+                        {{ form_widget(form.quantity) }}
+  
+
+                        {{ form_label(form.categories) }}
+                        {{ form_errors(form.categories) }}
+                        {{ form_widget(form.categories) }}
+
+                        <hr>
+                        <em>Image Principale</em>
+                        <br>
+                        {{ form_label(form.imagePrincipale.path) }}
+                        {{ form_errors(form.imagePrincipale.path) }}
+                        {{ form_widget(form.imagePrincipale.path) }}
+
+
+                        {{ form_label(form.imagePrincipale.alt) }}
+                        {{ form_errors(form.imagePrincipale.alt) }}
+                        {{ form_widget(form.imagePrincipale.alt) }}
+
+                        
+                        <hr>
+                        <em>Les images</em>
+                        <br>
+                        <ul class="tags" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+                            {{ form_label(form.images.vars.prototype.path) }}
+                            {{ form_errors(form.images.vars.prototype.path) }}
+                            {{ form_widget(form.images.vars.prototype.path) }}
+
+                            {{ form_label(form.images.vars.prototype.alt) }}
+                            {{ form_errors(form.images.vars.prototype.alt) }}
+                            {{ form_widget(form.images.vars.prototype.alt) }}
+                        </ul>
+
+                        {{ form_label(form.price) }}
+                        {{ form_errors(form.price) }}
+                        {{ form_widget(form.price) }}
+                        
+
+                    {{ form_end(form)}}
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+
+  
+{% endblock body %}

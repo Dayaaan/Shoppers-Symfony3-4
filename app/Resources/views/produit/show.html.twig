@@ -1,44 +1,70 @@
-{% extends 'base.html.twig' %}
+{% extends('base.html.twig') %}
 
 {% block body %}
-    <h1>Produit</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ produit.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ produit.name }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ produit.description }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ produit.price }}</td>
-            </tr>
-            <tr>
-                <th>Quantity</th>
-                <td>{{ produit.quantity }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="bg-light py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Tank Top T-Shirt</strong></div>
+      </div>
+    </div>
+  </div>  
 
-    <ul>
-        <li>
-            <a href="{{ path('produit_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('produit_edit', { 'id': produit.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
-{% endblock %}
+  <div class="site-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="{{ produit.imagePrincipale.path }}" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+          <h2 class="text-black">{{ produit.name }}</h2>
+          <p>{{ produit.description }}</p>
+          <em>Categorie : </em>
+          {% for produitCategory in produit.categories %}
+              <em class="mb-4">{{ produitCategory }} {% if not loop.last %}/{% endif %} </em>  
+          {% endfor %}
+          <br>
+          <br>
+          <p><strong class="text-primary h4">${{ produit.price }}</strong></p>
+          <div class="mb-1 d-flex">
+            <label for="option-sm" class="d-flex mr-3 mb-3">
+              <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-sm" name="shop-sizes"></span> <span class="d-inline-block text-black">Small</span>
+            </label>
+            <label for="option-md" class="d-flex mr-3 mb-3">
+              <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-md" name="shop-sizes"></span> <span class="d-inline-block text-black">Medium</span>
+            </label>
+            <label for="option-lg" class="d-flex mr-3 mb-3">
+              <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-lg" name="shop-sizes"></span> <span class="d-inline-block text-black">Large</span>
+            </label>
+            <label for="option-xl" class="d-flex mr-3 mb-3">
+              <span class="d-inline-block mr-2" style="top:-2px; position: relative;"><input type="radio" id="option-xl" name="shop-sizes"></span> <span class="d-inline-block text-black"> Extra Large</span>
+            </label>
+          </div>
+          <div class="mb-5">
+            <div class="input-group mb-3" style="max-width: 120px;">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+            </div>
+            <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+            </div>
+          </div>
+
+          </div>
+          <p><a href="cart.html" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+        </div>
+        
+      </div>
+      <br>
+      <br>
+      <div>
+            {% for produitImage in produit.images %}
+
+              <img src="{{ produitImage.path }}" alt=""/>
+
+            {% endfor %}
+        </div>
+    </div>
+  </div>
+{% endblock body %}
