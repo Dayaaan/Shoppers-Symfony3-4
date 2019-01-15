@@ -38,9 +38,11 @@ class ProduitType extends AbstractType
                     ])
                 ->add("Submit", SubmitType::class)
                 ;
-    }/**
+    }
+    /**
      * {@inheritdoc}
      */
+    
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(

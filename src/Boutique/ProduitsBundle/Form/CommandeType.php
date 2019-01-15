@@ -15,36 +15,11 @@ class CommandeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class,
-                    [ 
-                        'constrainst' => new Length(['min' => 3,'max' => 10]),
-                        'invalid_message' => "Nombre de caractères : entre 3 et 10 caractères",
-                        new NotBlank()
-                    ])
-                ->add('firstname', TextType::class,
-                    [ 
-                        'constrainst' => new Length(['min' => 3,'max' => 10]),
-                        'invalid_message' => "Nombre de caractères : entre 3 et 10 caractères",
-                        new NotBlank()
-                    ])
-                ->add('adress', TextType::class,
-                    [ 
-                        'constrainst' => new Length(['min' => 3,'max' => 100]),
-                        'invalid_message' => "Nombre de caractères : entre 3 et 100 caractères",
-                        new NotBlank()
-                    ])
-                ->add('city', TextType::class,
-                    [ 
-                        'constrainst' => new Length(['min' => 3,'max' => 10]),
-                        'invalid_message' => "Nombre de caractères : entre 3 et 10 caractères",
-                        new NotBlank()
-                    ])
-                ->add('zipcode', TextType::class,
-                    [ 
-                        'constrainst' => new Length(['min' => 3,'max' => 10]),
-                        'invalid_message' => "Nombre de caractères : entre 3 et 10 caractères",
-                        new NotBlank()
-                    ])
+        $builder->add('name', TextType::class)
+                ->add('firstname', TextType::class)
+                ->add('adress', TextType::class)
+                ->add('city', TextType::class)
+                ->add('zipcode', TextType::class)
                 ->add('createdAt', DateTimeType::class);
     }/**
      * {@inheritdoc}

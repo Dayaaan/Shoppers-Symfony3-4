@@ -2,10 +2,13 @@
 
 namespace Boutique\ProduitsBundle\Controller;
 
+use Boutique\ProduitsBundle\Entity\Produit;
 use Boutique\ProduitsBundle\Entity\Commande;
+use Symfony\Component\HttpFoundation\Request;
+use Boutique\ProduitsBundle\Controller\ProduitController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Commande controller.
@@ -31,14 +34,21 @@ class CommandeController extends Controller
         ));
     }
 
+
     /**
      * Creates a new commande entity.
      *
-     * @Route("/new", name="commande_new")
+     * @Route("/checkout", name="checkout")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
+        $session = $this->get('session');
+       
+        $orders = $session->get('orders');
+
+        dump($orders);
+
         $commande = new Commande();
         $form = $this->createForm('Boutique\ProduitsBundle\Form\CommandeType', $commande);
         $form->handleRequest($request);
