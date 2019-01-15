@@ -237,7 +237,7 @@ class ProduitController extends Controller
 
         $quantity = $request->request->get('quantity');
 
-        $session = $this->get('session');
+        $session = $this->get('session'); //appel au services
 
         //$session->clear();
 
