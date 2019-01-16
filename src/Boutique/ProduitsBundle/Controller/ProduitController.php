@@ -46,7 +46,7 @@ class ProduitController extends Controller
     /**
     * @Route("/displaycart" , name="cart")
     */
-    public function displayCartAction() {
+    public function displayCartAction(Request $request) {
 
         $session = $this->get('session');
        
@@ -60,7 +60,6 @@ class ProduitController extends Controller
 
         $subtotal = 0;
         $products = [];
-        
         if (isset($cart)) {
             for ( $i = 0 ; $i < sizeof($cart) ; $i++) {
             

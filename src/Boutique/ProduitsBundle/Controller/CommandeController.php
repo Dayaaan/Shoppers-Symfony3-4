@@ -50,26 +50,33 @@ class CommandeController extends Controller
 
         $subtotal = 0;
 
-        dump($orders);
+        //dump($orders);
 
         for ($i = 0; $i < count($orders); $i++) {
             $subtotal += $orders[$i]['total'];
         }
-        dump($subtotal);
+        //dump($subtotal);
 
         $commande = new Commande();
         
         $form = $this->createForm('Boutique\ProduitsBundle\Form\CommandeType', $commande);
         $form->handleRequest($request);
-        
+
+        $quantity = $request->request->get('quantity');
+        dump($quantity);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($commande);
+
            
         for ($i = 0; $i < count($orders); $i++) {
             $produit = $em->getRepository(Produit::class)->find($orders[$i]['productDetails']->getId());
             $produitCommande = new ProduitCommande();
+            
             $produitCommande->setQuantity($orders[$i]['quantity']);
+
+            
+
             $produitCommande->setPrice($orders[$i]['productDetails']->getPrice());
             $produitCommande->setProduit($produit);
             $produitCommande->setCommande($commande);
@@ -106,6 +113,31 @@ class CommandeController extends Controller
             'orders' => $orders,
             'subtotal' => $subtotal
         ));
+    }
+    /**
+     * @Route("/orderCount", name="count")
+     */
+
+    public function orderCountAction() {
+        $session = $this->get('session');
+
+        $orders = $session->get('orders');
+
+        $count = [];
+
+        if (isset($orders)) {
+            $count = count($orders);
+            return $this->render('commande/count.html.twig', 
+                [
+                    'count' => $count
+                ]);
+        }
+
+        return $this->render('commande/count.html.twig', 
+            [
+                'count' => $count
+            ]);
+
     }
 
     /**
