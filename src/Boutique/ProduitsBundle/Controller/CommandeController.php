@@ -80,6 +80,18 @@ class CommandeController extends Controller
             $em->flush();
             $session->clear();
 
+            
+            $message = (new \Swift_Message('Votre commande à bien été validé'))
+                ->setFrom('dayaaan.vu@gmail.com')
+                ->setTo($commande->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'email/validateorder.html.twig'
+                    ),
+                    'text/html'
+            );
+            $this->get('mailer')->send($message);
+
             return $this->render('commande/thankyou.html.twig', array('id' => $commande->getId()));
         }
 

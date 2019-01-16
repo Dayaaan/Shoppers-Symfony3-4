@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class CommandeType extends AbstractType
@@ -17,6 +18,7 @@ class CommandeType extends AbstractType
     {
         $builder->add('name', TextType::class)
                 ->add('firstname', TextType::class)
+                ->add('email', EmailType::class)
                 ->add('adress', TextType::class)
                 ->add('city', TextType::class)
                 ->add('zipcode', TextType::class);
