@@ -59,19 +59,25 @@ class ProduitController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $subtotal = 0;
-
-        for ( $i = 0 ; $i < sizeof($cart) ; $i++) {
+        $products = [];
+        
+        if (isset($cart)) {
+            for ( $i = 0 ; $i < sizeof($cart) ; $i++) {
             
-            $products[$i]['productDetails'] = $em->getRepository(Produit::class)->find($cart[$i]['idproduit']);
-            $products[$i]['quantity'] = $cart[$i]['qteproduit'];
-            $products[$i]['total'] = $products[$i]['productDetails']->getPrice() * $cart[$i]['qteproduit'];
-            $subtotal += $products[$i]['total'];
-        }     
-        dump($products);
+                $products[$i]['productDetails'] = $em->getRepository(Produit::class)->find($cart[$i]['idproduit']);
+                $products[$i]['quantity'] = $cart[$i]['qteproduit'];
+                $products[$i]['total'] = $products[$i]['productDetails']->getPrice() * $cart[$i]['qteproduit'];
+                $subtotal += $products[$i]['total'];
+            }   
+            dump($products);
 
     
 
-        $orders = $session->set('orders', $products);
+            $orders = $session->set('orders', $products); 
+        } 
+         
+        
+        
         
 
         return $this->render("produit/cart.html.twig", 

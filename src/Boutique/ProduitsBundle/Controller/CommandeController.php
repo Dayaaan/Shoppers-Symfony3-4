@@ -86,7 +86,12 @@ class CommandeController extends Controller
                 ->setTo($commande->getEmail())
                 ->setBody(
                     $this->renderView(
-                        'email/validateorder.html.twig'
+                        'email/validateorder.html.twig',
+                        [
+                            'produitCommande' => $produitCommande,
+                            'orders' => $orders,
+                            'subtotal' =>$subtotal
+                        ]
                     ),
                     'text/html'
             );

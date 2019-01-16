@@ -1,1 +1,25 @@
-<p>Bien joué</p>
+<table class="table site-block-order-table mb-5">
+        <thead>
+          <th>Product</th>
+          <th>Total</th>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>{{ order.productDetails.name }} <strong class="mx-2">x</strong> {{ order.quantity }}</td>
+            <td>{{ order.productDetails.price * order.quantity }} €</td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+            <td class="text-black">{{ subtotal }} €
+            </td>
+          </tr>
+
+          <tr>
+            <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+            <td class="text-black font-weight-bold"><strong>{{ subtotal }} €</strong></td>
+          </tr>
+
+        </tbody>
+      </table>
