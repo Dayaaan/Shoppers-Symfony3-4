@@ -37,7 +37,6 @@ class ProduitCommande
 
     /** 
      * @ORM\ManyToOne(targetEntity="Produit")
-     * @ORM\JoinColumn(nullable = true)
      */
     private $produit;
     /** 
@@ -104,52 +103,4 @@ class ProduitCommande
         return $this->price;
     }
 
-
-    /**
-     * Set produit
-     *
-     * @param \Boutique\ProduitsBundle\Entity\Produit $produit
-     *
-     * @return ProduitCommande
-     */
-    public function setProduit(\Boutique\ProduitsBundle\Entity\Produit $produit = null)
-    {
-        $this->produit = $produit;
-
-        return $this;
-    }
-
-    /**
-     * Get produit
-     *
-     * @return \Boutique\ProduitsBundle\Entity\Produit
-     */
-    public function getProduit()
-    {
-        return $this->produit;
-    }
-
-    /**
-     * Set commande
-     *
-     * @param \Boutique\ProduitsBundle\Entity\Commande $commande
-     *
-     * @return ProduitCommande
-     */
-    public function setCommande(\Boutique\ProduitsBundle\Entity\Commande $commande = null)
-    {
-        $this->commande = $commande;
-
-        return $this;
-    }
-
-    /**
-     * Get commande
-     *
-     * @return \Boutique\ProduitsBundle\Entity\Commande
-     */
-    public function getCommande()
-    {
-        return $this->commande;
-    }
 }

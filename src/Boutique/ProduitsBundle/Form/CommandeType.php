@@ -19,8 +19,7 @@ class CommandeType extends AbstractType
                 ->add('firstname', TextType::class)
                 ->add('adress', TextType::class)
                 ->add('city', TextType::class)
-                ->add('zipcode', TextType::class)
-                ->add('createdAt', DateTimeType::class);
+                ->add('zipcode', TextType::class);
     }/**
      * {@inheritdoc}
      */

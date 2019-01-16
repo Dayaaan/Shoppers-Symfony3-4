@@ -71,23 +71,6 @@
           </div>
         </div>
         <div class="col-md-6">
-
-          <div class="row mb-5">
-            <div class="col-md-12">
-              <h2 class="h3 mb-3 text-black">Coupon Code</h2>
-              <div class="p-3 p-lg-5 border">
-                
-                <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
-                <div class="input-group w-75">
-                  <input type="text" class="form-control" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary btn-sm" type="button" id="button-addon2">Apply</button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
           
           <div class="row mb-5">
             <div class="col-md-12">
@@ -99,22 +82,23 @@
                     <th>Total</th>
                   </thead>
                   <tbody>
+                    {% for order in orders %}
                     <tr>
-                      <td>Top Up T-Shirt <strong class="mx-2">x</strong> 1</td>
-                      <td>$250.00</td>
+                      <td>{{ order.productDetails.name }} <strong class="mx-2">x</strong> {{ order.quantity }}</td>
+                      <td>{{ order.productDetails.price * order.quantity }} €</td>
                     </tr>
-                    <tr>
-                      <td>Polo Shirt <strong class="mx-2">x</strong>   1</td>
-                      <td>$100.00</td>
-                    </tr>
+                    {% endfor %}
                     <tr>
                       <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                      <td class="text-black">$350.00</td>
+                      <td class="text-black">{{ subtotal }} €
+                      </td>
                     </tr>
+
                     <tr>
                       <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                      <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
+                      <td class="text-black font-weight-bold"><strong>{{ subtotal }} €</strong></td>
                     </tr>
+
                   </tbody>
                 </table>
 
@@ -149,7 +133,7 @@
                 </div>
 
                 <div class="form-group">
-                  <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='thankyou.html'">Place Order</button>
+                  <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">Place Order</button>
                 </div>
 
               </div>

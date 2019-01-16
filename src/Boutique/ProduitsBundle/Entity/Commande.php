@@ -34,6 +34,12 @@ class Commande
      * @ORM\Column(name="firstname", type="string", length=255)
      */
     private $firstname;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
 
     /**
      * @var string
@@ -216,5 +222,11 @@ class Commande
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    public function __construct() {
+
+        $this->createdAt = new \DateTime();
+
     }
 }

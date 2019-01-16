@@ -5,6 +5,7 @@ namespace Boutique\ProduitsBundle\Controller;
 use Boutique\ProduitsBundle\Entity\Produit;
 use Boutique\ProduitsBundle\Entity\Commande;
 use Symfony\Component\HttpFoundation\Request;
+use Boutique\ProduitsBundle\Entity\ProduitCommande;
 use Boutique\ProduitsBundle\Controller\ProduitController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -47,23 +48,46 @@ class CommandeController extends Controller
        
         $orders = $session->get('orders');
 
+        $subtotal = 0;
+
         dump($orders);
 
+        for ($i = 0; $i < count($orders); $i++) {
+            $subtotal += $orders[$i]['total'];
+        }
+        dump($subtotal);
+
         $commande = new Commande();
+        
         $form = $this->createForm('Boutique\ProduitsBundle\Form\CommandeType', $commande);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($commande);
+           
+        for ($i = 0; $i < count($orders); $i++) {
+            $produit = $em->getRepository(Produit::class)->find($orders[$i]['productDetails']->getId());
+            $produitCommande = new ProduitCommande();
+            $produitCommande->setQuantity($orders[$i]['quantity']);
+            $produitCommande->setPrice($orders[$i]['productDetails']->getPrice());
+            $produitCommande->setProduit($produit);
+            $produitCommande->setCommande($commande);
+            $em->persist($produitCommande);
+            dump($produitCommande);
+        }
+        
             $em->flush();
+            $session->clear();
 
-            return $this->redirectToRoute('commande_show', array('id' => $commande->getId()));
+            return $this->render('commande/thankyou.html.twig', array('id' => $commande->getId()));
         }
 
         return $this->render('commande/new.html.twig', array(
             'commande' => $commande,
             'form' => $form->createView(),
+            'orders' => $orders,
+            'subtotal' => $subtotal
         ));
     }
 
