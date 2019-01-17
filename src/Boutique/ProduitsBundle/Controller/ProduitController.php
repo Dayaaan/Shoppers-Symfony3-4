@@ -2,15 +2,17 @@
 
 namespace Boutique\ProduitsBundle\Controller;
 
+use Faker;
 use Boutique\ProduitsBundle\Entity\Image;
 use Boutique\ProduitsBundle\Entity\Produit;
 use Boutique\ProduitsBundle\Entity\Category;
 use Boutique\ProduitsBundle\Form\ProduitType;
+use Symfony\Component\HttpFoundation\Request;
+use Boutique\ProduitsBundle\Entity\ImagePrincipale;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Produit controller.
@@ -74,7 +76,7 @@ class ProduitController extends Controller
 
             $orders = $session->set('orders', $products); 
         } 
-         
+        
         
         
         
@@ -98,6 +100,29 @@ class ProduitController extends Controller
      */
     public function newAction(Request $request)
     {
+        // $faker = Faker\Factory::create('fr_FR');
+
+        // $em = $this->getDoctrine()->getManager();
+ 
+        // for ($i = 0; $i < 50; $i++) {
+        //     $produit = new Produit();
+            
+        //     $produit->setName($faker->name);
+        //     $produit->setDescription($faker->text);
+        //     $produit->setPrice($faker->randomFloat(2,10,1000));
+        //     $produit->setQuantity($faker->numberBetween(1,100));
+        //     for ($l = 0; $l < 50; $l++) {
+        //         $image = new ImagePrincipale();
+        //         $image->setAlt($faker->imageUrl(640,480));
+        //         $image->setPath($faker->imageUrl(640,480));
+        //         $produit->setImagePrincipale($image);
+        //     }
+            
+        //     $em->persist($produit);
+        // }
+ 
+        // $em->flush();
+
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);

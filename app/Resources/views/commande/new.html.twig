@@ -102,7 +102,7 @@
                   <tbody>
                     {% for order in orders %}
                     <tr>
-                      <td>{{ order.productDetails.name }} <strong class="mx-2">x</strong> {{ order.quantity }}</td>
+                      <td>{{ order.productDetails.name }} <strong class="mx-2">x</strong> {% for quantity in newQuantity %} {{ quantity }} {% endfor %}</td>
                       <td>{{ order.productDetails.price * order.quantity }} €</td>
                     </tr>
                     {% endfor %}

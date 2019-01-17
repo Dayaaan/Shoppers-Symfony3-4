@@ -50,7 +50,7 @@ class CommandeController extends Controller
 
         $subtotal = 0;
 
-        //dump($orders);
+        dump($orders);
 
         for ($i = 0; $i < count($orders); $i++) {
             $subtotal += $orders[$i]['total'];
@@ -63,6 +63,13 @@ class CommandeController extends Controller
         $form->handleRequest($request);
 
         $quantity = $request->request->get('quantity');
+
+        for ($l = 0; $l < count($quantity); $l++) {
+            if ( $orders[$l]['quantity'] != $quantity[$l] ) {
+                $orders[$l]['quantity'] = $quantity[$l];
+                
+            }
+        }
         dump($quantity);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -72,11 +79,7 @@ class CommandeController extends Controller
         for ($i = 0; $i < count($orders); $i++) {
             $produit = $em->getRepository(Produit::class)->find($orders[$i]['productDetails']->getId());
             $produitCommande = new ProduitCommande();
-            
             $produitCommande->setQuantity($orders[$i]['quantity']);
-
-            
-
             $produitCommande->setPrice($orders[$i]['productDetails']->getPrice());
             $produitCommande->setProduit($produit);
             $produitCommande->setCommande($commande);
@@ -97,7 +100,7 @@ class CommandeController extends Controller
                         [
                             'produitCommande' => $produitCommande,
                             'orders' => $orders,
-                            'subtotal' =>$subtotal
+                            'subtotal' => $subtotal
                         ]
                     ),
                     'text/html'
@@ -111,7 +114,8 @@ class CommandeController extends Controller
             'commande' => $commande,
             'form' => $form->createView(),
             'orders' => $orders,
-            'subtotal' => $subtotal
+            'subtotal' => $subtotal,
+            'newQuantity' => $quantity
         ));
     }
     /**

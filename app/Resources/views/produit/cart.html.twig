@@ -21,7 +21,7 @@
                 {% for key, product in products %}
                 <tr>
                   <td class="product-thumbnail">
-                    <img src="images/cloth_1.jpg" alt="Image" class="img-fluid">
+                    <img src="{{ product.productDetails.imagePrincipale.path }}" alt="{{ product.productDetails.imagePrincipale.alt }}" class="img-fluid">
                   </td>
                   <td class="product-name">
                     <h2 class="h5 text-black">{{ product.productDetails.name }}</h2>
