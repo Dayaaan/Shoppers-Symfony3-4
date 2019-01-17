@@ -1,27 +1,25 @@
 <?php
 
-namespace Boutique\ProduitsBundle\Entity;
+namespace Boutique\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
- * Commande
+ * User
  *
- * @ORM\Table(name="commande")
- * @ORM\Entity(repositoryClass="Boutique\ProduitsBundle\Repository\CommandeRepository")
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="Boutique\UserBundle\Repository\UserRepository")
  */
-class Commande
+class User extends BaseUser
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
+    protected $id;
+        /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -34,12 +32,6 @@ class Commande
      * @ORM\Column(name="firstname", type="string", length=255)
      */
     private $firstname;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     */
-    private $email;
 
     /**
      * @var string
@@ -62,30 +54,20 @@ class Commande
      */
     private $zipcode;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="createdAt", type="datetime")
-     */
-    private $createdAt;
-
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function __construct()
     {
-        return $this->id;
+        parent::__construct();
+        // your own logic
     }
+
+
 
     /**
      * Set name
      *
      * @param string $name
      *
-     * @return Commande
+     * @return User
      */
     public function setName($name)
     {
@@ -109,7 +91,7 @@ class Commande
      *
      * @param string $firstname
      *
-     * @return Commande
+     * @return User
      */
     public function setFirstname($firstname)
     {
@@ -133,7 +115,7 @@ class Commande
      *
      * @param string $adress
      *
-     * @return Commande
+     * @return User
      */
     public function setAdress($adress)
     {
@@ -157,7 +139,7 @@ class Commande
      *
      * @param string $city
      *
-     * @return Commande
+     * @return User
      */
     public function setCity($city)
     {
@@ -181,7 +163,7 @@ class Commande
      *
      * @param string $zipcode
      *
-     * @return Commande
+     * @return User
      */
     public function setZipcode($zipcode)
     {
@@ -198,35 +180,5 @@ class Commande
     public function getZipcode()
     {
         return $this->zipcode;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Commande
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    public function __construct() {
-
-        $this->createdAt = new \DateTime();
-
     }
 }

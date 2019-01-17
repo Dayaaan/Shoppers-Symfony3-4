@@ -1,0 +1,18 @@
+<?php
+
+namespace Boutique\UserBundle\Controller;
+
+use FOS\UserBundle\FOSUserBundle;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+class DefaultController extends Controller
+{
+    /**
+     * @Route("/")
+     */
+    public function indexAction()
+    {
+        return $this->render('BoutiqueUserBundle:Default:index.html.twig');
+    }
+}

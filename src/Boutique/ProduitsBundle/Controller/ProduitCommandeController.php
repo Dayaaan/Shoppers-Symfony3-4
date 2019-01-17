@@ -6,6 +6,8 @@ use Boutique\ProduitsBundle\Entity\ProduitCommande;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Produitcommande controller.
@@ -33,10 +35,18 @@ class ProduitCommandeController extends Controller
 
     /**
      * Creates a new produitCommande entity.
+     * Will throw a normal AccessDeniedException:
+     *
+     * @IsGranted("ROLE_ADMIN", message="No access! Get out!")
+     *
+     * Will throw an HttpException with a 404 status code:
+     *
+     * @IsGranted("ROLE_ADMIN", statusCode=404, message="Post not found")
      *
      * @Route("/new", name="produitcommande_new")
      * @Method({"GET", "POST"})
      */
+    
     public function newAction(Request $request)
     {
         $produitCommande = new Produitcommande();

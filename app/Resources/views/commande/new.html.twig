@@ -12,12 +12,23 @@
   <div class="site-section">
     <div class="container">
       <div class="row mb-5">
+        {% if (app.user) %}
+          <div class="col-md-12">
+              <div class="border p-4 rounded" role="alert">
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a> 
+              </div>
+          </div>
+        {% else %}
         <div class="col-md-12">
           <div class="border p-4 rounded" role="alert">
-            Returning customer? <a href="#">Click here</a> to login
+            Returning customer? <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
           </div>
         </div>
       </div>
+      {% endif %}
       {{ form_start(form) }}
       <div class="row">
         <div class="col-md-6 mb-5 mb-md-0">

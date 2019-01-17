@@ -1,3 +1,8 @@
+boutique_user:
+    resource: "@BoutiqueUserBundle/Controller/"
+    type:     annotation
+    prefix:   /user
+
 boutique_front:
     resource: "@BoutiqueFrontBundle/Controller/"
     type:     annotation
@@ -7,3 +12,6 @@ boutique_produits:
     resource: "@BoutiqueProduitsBundle/Controller/"
     type:     annotation
     prefix:   /boutique
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

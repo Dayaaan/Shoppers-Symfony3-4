@@ -1,0 +1,33 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+    <div class="container">
+            <h1>Votre profil</h1>
+            <h2>Bonjour {{ app.user.name }}</h1>
+           
+           <div class="col-md-12 ml-auto">
+                <div class="p-4 border mb-3">
+                  <span class="d-block text-primary h6 text-uppercase">Nom : </span>
+                  <p class="mb-0">{{ user.name }}</p>
+                </div>
+                <div class="p-4 border mb-3">
+                    <span class="d-block text-primary h6 text-uppercase">Prenom : </span>
+                    <p class="mb-0">{{ user.firstname }}</p>
+                </div>
+                <div class="p-4 border mb-3">
+                    <span class="d-block text-primary h6 text-uppercase">addresse : </span>
+                    <p class="mb-0">{{ user.adress }}</p>
+                </div> 
+                <div class="p-4 border mb-3">
+                    <span class="d-block text-primary h6 text-uppercase">Ville : </span>
+                    <p class="mb-0">{{ user.city }}</p>
+                </div>   
+                <div class="p-4 border mb-3">
+                    <span class="d-block text-primary h6 text-uppercase">Code postale : </span>
+                    <p class="mb-0">{{ user.zipcode }}</p>
+                </div>            
+            </div>
+        </div>  
+{% endblock body %}
