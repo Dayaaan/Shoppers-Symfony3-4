@@ -19,7 +19,8 @@ class AppKernel extends Kernel
             new Boutique\ProduitsBundle\BoutiqueProduitsBundle(),
             new Boutique\FrontBundle\BoutiqueFrontBundle(),
             new Boutique\UserBundle\BoutiqueUserBundle(),
-            new FOS\UserBundle\FOSUserBundle()
+            new FOS\UserBundle\FOSUserBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

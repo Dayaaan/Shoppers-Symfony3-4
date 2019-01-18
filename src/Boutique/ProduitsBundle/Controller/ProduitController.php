@@ -62,13 +62,15 @@ class ProduitController extends Controller
 
         $subtotal = 0;
         $products = [];
+        
         if (isset($cart)) {
-            for ( $i = 0 ; $i < sizeof($cart) ; $i++) {
+            for ( $i = 0 ; $i < count($cart) ; $i++) {
             
                 $products[$i]['productDetails'] = $em->getRepository(Produit::class)->find($cart[$i]['idproduit']);
                 $products[$i]['quantity'] = $cart[$i]['qteproduit'];
                 $products[$i]['total'] = $products[$i]['productDetails']->getPrice() * $cart[$i]['qteproduit'];
                 $subtotal += $products[$i]['total'];
+                dump($products);
             }   
             dump($products);
 
@@ -77,18 +79,12 @@ class ProduitController extends Controller
             $orders = $session->set('orders', $products); 
         } 
         
-        
-        
-        
-
         return $this->render("produit/cart.html.twig", 
             [
                 'products' => $products,
                 'subtotal' => $subtotal
             ]
         );
-
-
 
     }
 
@@ -127,11 +123,14 @@ class ProduitController extends Controller
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
+            
 
         if ($form->isSubmitted() && $form->isValid()) {
             $x = $form->getData();
+            dump($x);
 
-            $images->$form["images"];
+            $images = $x->getImages();
+            dump($images);
 
             foreach ($images as $image) {
                 $image->setProduit($produit);

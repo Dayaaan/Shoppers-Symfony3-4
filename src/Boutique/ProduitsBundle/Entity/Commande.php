@@ -4,6 +4,7 @@ namespace Boutique\ProduitsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Commande
  *
@@ -54,6 +55,13 @@ class Commande
      * @ORM\Column(name="city", type="string", length=255)
      */
     private $city;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="states", type="string", length=255)
+     */
+    private $states;
 
     /**
      * @var string
@@ -68,6 +76,12 @@ class Commande
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Boutique\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
 
     /**
@@ -252,5 +266,57 @@ class Commande
     public function getEmail()
     {
         return $this->email;
+    }
+
+
+
+
+
+    /**
+     * Set user
+     *
+     * @param \Boutique\UserBundle\Entity\User $user
+     *
+     * @return Commande
+     */
+    public function setUser(\Boutique\UserBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Boutique\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set states
+     *
+     * @param string $states
+     *
+     * @return Commande
+     */
+    public function setStates($states)
+    {
+        $this->states = $states;
+
+        return $this;
+    }
+
+    /**
+     * Get states
+     *
+     * @return string
+     */
+    public function getStates()
+    {
+        return $this->states;
     }
 }

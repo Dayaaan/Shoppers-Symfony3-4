@@ -69,6 +69,13 @@
                     {{ form_widget(form.zipcode) }}
                 </div>
             </div>
+            <div class="form-group row">
+              <div class="col-md-12">
+                  {{ form_label(form.states) }}
+                  {{ form_errors(form.states) }}
+                  {{ form_widget(form.states) }}
+              </div>
+          </div>
 
             <div class="form-group row">
                 <div class="col-md-12">
@@ -102,7 +109,7 @@
                   <tbody>
                     {% for order in orders %}
                     <tr>
-                      <td>{{ order.productDetails.name }} <strong class="mx-2">x</strong> {% for quantity in newQuantity %} {{ quantity }} {% endfor %}</td>
+                      <td>{{ order.productDetails.name }} <strong class="mx-2">x</strong> {{ order.quantity }}</td>
                       <td>{{ order.productDetails.price * order.quantity }} €</td>
                     </tr>
                     {% endfor %}

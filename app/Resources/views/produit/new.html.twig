@@ -28,8 +28,11 @@
                         {{ form_widget(form.categories) }}
 
                         <hr>
-                        <em>Image Principale</em>
-                        <br>
+
+                        {{ form_errors(form.imagePrincipale.imageFile) }}
+                        {{ form_widget(form.imagePrincipale.imageFile) }}
+
+                        {# <br>
                         {{ form_label(form.imagePrincipale.path) }}
                         {{ form_errors(form.imagePrincipale.path) }}
                         {{ form_widget(form.imagePrincipale.path) }}
@@ -37,13 +40,18 @@
 
                         {{ form_label(form.imagePrincipale.alt) }}
                         {{ form_errors(form.imagePrincipale.alt) }}
-                        {{ form_widget(form.imagePrincipale.alt) }}
+                        {{ form_widget(form.imagePrincipale.alt) }} #}
+
 
                         
                         <hr>
-                        <em>Les images</em>
                         <br>
-                        <ul class="tags" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+                        <ul class="tags" data-prototype="{{ form_widget(form.images.vars.prototype.imageFile)|e('html_attr') }}">
+                            {{ form_errors(form.images.vars.prototype.imageFile) }}
+                            {{ form_widget(form.images.vars.prototype.imageFile) }}
+                        </ul>
+
+                        {#<ul class="tags" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
                             {{ form_label(form.images.vars.prototype.path) }}
                             {{ form_errors(form.images.vars.prototype.path) }}
                             {{ form_widget(form.images.vars.prototype.path) }}
@@ -51,7 +59,7 @@
                             {{ form_label(form.images.vars.prototype.alt) }}
                             {{ form_errors(form.images.vars.prototype.alt) }}
                             {{ form_widget(form.images.vars.prototype.alt) }}
-                        </ul>
+                        </ul> #}
 
                         {{ form_label(form.price) }}
                         {{ form_errors(form.price) }}

@@ -58,19 +58,29 @@ class CommandeController extends Controller
         //dump($subtotal);
 
         $commande = new Commande();
+        //Pré remplir le formulaire commande si l'utilisateur est connecté
+        if ($this->getUser()) {
+            $commande->setName($this->getUser()->getName());
+            $commande->setFirstname($this->getUser()->getFirstName());
+            $commande->setAdress($this->getUser()->getAdress());
+            $commande->setCity($this->getUser()->getCity());
+            $commande->setZipcode($this->getUser()->getZipcode());
+            $commande->setEmail($this->getUser()->getEmail());
+            $commande->setUser($this->getUser());
+        }
         
         $form = $this->createForm('Boutique\ProduitsBundle\Form\CommandeType', $commande);
         $form->handleRequest($request);
-
+    
         $quantity = $request->request->get('quantity');
-
-        for ($l = 0; $l < count($quantity); $l++) {
-            if ( $orders[$l]['quantity'] != $quantity[$l] ) {
-                $orders[$l]['quantity'] = $quantity[$l];
-                
+        if ($quantity){
+            for ($l = 0; $l < count($quantity); $l++) {
+                if ( $orders[$l]['quantity'] != $quantity[$l] ) {
+                    $orders[$l]['quantity'] = $quantity[$l];
+                    
+                }
             }
         }
-        dump($quantity);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($commande);
@@ -90,7 +100,6 @@ class CommandeController extends Controller
             $em->flush();
             $session->clear();
 
-            
             $message = (new \Swift_Message('Votre commande à bien été validé'))
                 ->setFrom('dayaaan.vu@gmail.com')
                 ->setTo($commande->getEmail())

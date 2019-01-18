@@ -1,25 +1,28 @@
 <?php
 
-namespace Boutique\UserBundle\Entity;
+namespace Boutique\ProduitsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+
 
 /**
- * User
+ * Commande
  *
- * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="Boutique\UserBundle\Repository\UserRepository")
+ * @ORM\Table(name="commande")
+ * @ORM\Entity(repositoryClass="Boutique\ProduitsBundle\Repository\CommandeRepository")
  */
-class User extends BaseUser
+class Commande
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
-        /**
+    private $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -32,6 +35,12 @@ class User extends BaseUser
      * @ORM\Column(name="firstname", type="string", length=255)
      */
     private $firstname;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
 
     /**
      * @var string
@@ -61,20 +70,36 @@ class User extends BaseUser
      */
     private $zipcode;
 
-    public function __construct()
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Boutique\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
     {
-        parent::__construct();
-        // your own logic
+        return $this->id;
     }
-
-
 
     /**
      * Set name
      *
      * @param string $name
      *
-     * @return User
+     * @return Commande
      */
     public function setName($name)
     {
@@ -98,7 +123,7 @@ class User extends BaseUser
      *
      * @param string $firstname
      *
-     * @return User
+     * @return Commande
      */
     public function setFirstname($firstname)
     {
@@ -122,7 +147,7 @@ class User extends BaseUser
      *
      * @param string $adress
      *
-     * @return User
+     * @return Commande
      */
     public function setAdress($adress)
     {
@@ -146,7 +171,7 @@ class User extends BaseUser
      *
      * @param string $city
      *
-     * @return User
+     * @return Commande
      */
     public function setCity($city)
     {
@@ -170,7 +195,7 @@ class User extends BaseUser
      *
      * @param string $zipcode
      *
-     * @return User
+     * @return Commande
      */
     public function setZipcode($zipcode)
     {
@@ -190,26 +215,84 @@ class User extends BaseUser
     }
 
     /**
-     * Set states
+     * Set createdAt
      *
-     * @param string $states
+     * @param \DateTime $createdAt
      *
-     * @return User
+     * @return Commande
      */
-    public function setStates($states)
+    public function setCreatedAt($createdAt)
     {
-        $this->states = $states;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get states
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function __construct() {
+
+        $this->createdAt = new \DateTime();
+
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Commande
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
      *
      * @return string
      */
-    public function getStates()
+    public function getEmail()
     {
-        return $this->states;
+        return $this->email;
+    }
+
+
+
+
+
+    /**
+     * Set user
+     *
+     * @param \Boutique\UserBundle\Entity\User $user
+     *
+     * @return Commande
+     */
+    public function setUser(\Boutique\UserBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Boutique\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

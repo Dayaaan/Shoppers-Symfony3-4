@@ -188,28 +188,4 @@ class User extends BaseUser
     {
         return $this->zipcode;
     }
-
-    /**
-     * Set states
-     *
-     * @param string $states
-     *
-     * @return User
-     */
-    public function setStates($states)
-    {
-        $this->states = $states;
-
-        return $this;
-    }
-
-    /**
-     * Get states
-     *
-     * @return string
-     */
-    public function getStates()
-    {
-        return $this->states;
-    }
 }

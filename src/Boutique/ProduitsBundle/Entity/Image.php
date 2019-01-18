@@ -3,143 +3,106 @@
 namespace Boutique\ProduitsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Image
  *
  * @ORM\Table(name="image")
+ * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="Boutique\ProduitsBundle\Repository\ImageRepository")
  */
 class Image
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
+/**
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="path", type="string", length=255)
-     */
-    private $path;
+    // ... other fields
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="alt", type="string", length=255)
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="product_image2", fileNameProperty="imageName", size="imageSize")
+     * 
+     * @var File
      */
-    private $alt;
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $imageName;
+
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @var integer
+     */
+    private $imageSize;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Produit", inversedBy="images")
      */
     private $produit;
 
-
     /**
-     * Get id
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
      *
-     * @return int
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
      */
-    public function getId()
+    public function setImageFile(?File $imageFile = null): void
     {
-        return $this->id;
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
-    /**
-     * Set path
-     *
-     * @param string $path
-     *
-     * @return Image
-     */
-    public function setPath($path)
+    public function getImageFile(): ?File
     {
-        $this->path = $path;
-
-        return $this;
+        return $this->imageFile;
     }
 
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
+    public function setImageName(?string $imageName): void
     {
-        return $this->path;
+        $this->imageName = $imageName;
     }
 
-    /**
-     * Set alt
-     *
-     * @param string $alt
-     *
-     * @return Image
-     */
-    public function setAlt($alt)
+    public function getImageName(): ?string
     {
-        $this->alt = $alt;
-
-        return $this;
+        return $this->imageName;
+    }
+    
+    public function setImageSize(?int $imageSize): void
+    {
+        $this->imageSize = $imageSize;
     }
 
-    /**
-     * Get alt
-     *
-     * @return string
-     */
-    public function getAlt()
+    public function getImageSize(): ?int
     {
-        return $this->alt;
+        return $this->imageSize;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add image
-     *
-     * @param \Boutique\ProduitsBundle\Entity\Image $image
-     *
-     * @return Image
-     */
-    public function addImage(\Boutique\ProduitsBundle\Entity\Image $image)
-    {
-        $this->images[] = $image;
-
-        return $this;
-    }
-
-    /**
-     * Remove image
-     *
-     * @param \Boutique\ProduitsBundle\Entity\Image $image
-     */
-    public function removeImage(\Boutique\ProduitsBundle\Entity\Image $image)
-    {
-        $this->images->removeElement($image);
-    }
-
-    /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
     /**
      * Set produit
      *
@@ -150,10 +113,8 @@ class Image
     public function setProduit(\Boutique\ProduitsBundle\Entity\Produit $produit = null)
     {
         $this->produit = $produit;
-
         return $this;
     }
-
     /**
      * Get produit
      *
@@ -163,4 +124,6 @@ class Image
     {
         return $this->produit;
     }
+
+
 }

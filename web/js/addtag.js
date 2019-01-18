@@ -42,7 +42,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
     var $newFormLi = $('<li></li>').append(newForm);
     
     // also add a remove button, just for this example
-    $newFormLi.append('<a href="#" class="remove-tag">x</a>');
+    $newFormLi.append('<a href="#" class="remove-tag"> <span class="icon icon-delete"></span></a>');
     
     $newLinkLi.before($newFormLi);
     
