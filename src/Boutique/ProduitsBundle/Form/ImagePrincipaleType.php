@@ -9,20 +9,18 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-
 class ImagePrincipaleType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('imageFile', VichImageType::class,
-            [
-                'label' => 'Telecharger votre image principale : '
-            ]
-        );
-    }/**
+        $builder->add('imageFile', VichImageType::class)
+                ->add('imageAlt', TextType::class);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -39,6 +37,5 @@ class ImagePrincipaleType extends AbstractType
     {
         return 'boutique_produitsbundle_imageprincipale';
     }
-
 
 }

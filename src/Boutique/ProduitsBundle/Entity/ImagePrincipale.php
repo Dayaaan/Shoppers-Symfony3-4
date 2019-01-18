@@ -6,34 +6,23 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-
 /**
  * ImagePrincipale
  *
  * @ORM\Table(name="image_principale")
- * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="Boutique\ProduitsBundle\Repository\ImagePrincipaleRepository")
+ * @Vich\Uploadable
  */
 class ImagePrincipale
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    // ... other fields
-
-    /**
-     * NOTE: This is not a mapped field of entity metadata, just a simple property.
-     * 
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName", size="imageSize")
-     * 
-     * @var File
-     */
-    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -43,20 +32,34 @@ class ImagePrincipale
     private $imageName;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var string
      *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageAlt;
+
+    /**
      * @var integer
+     *
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $imageSize;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var File
+     *
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName", size="imageSize")
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(name="updated_at", type="datetime")
      *
      * @var \DateTime
      */
     private $updatedAt;
-
-
 
     /**
      * Get id
@@ -102,7 +105,7 @@ class ImagePrincipale
     {
         return $this->imageName;
     }
-    
+
     public function setImageSize(?int $imageSize): void
     {
         $this->imageSize = $imageSize;
@@ -111,5 +114,54 @@ class ImagePrincipale
     public function getImageSize(): ?int
     {
         return $this->imageSize;
+    }
+
+    /**
+     * Set alt
+     *
+     * @param string $imageAlt
+     *
+     * @return ImagePrincipale
+     */
+    public function setImageAlt($imageAlt)
+    {
+        $this->imageAlt = $imageAlt;
+
+        return $this;
+    }
+
+    /**
+     * Get alt
+     *
+     * @return string
+     */
+    public function getImageAlt()
+    {
+        return $this->imageAlt;
+    }
+
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return ImagePrincipale
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }
