@@ -60,12 +60,19 @@
       <br>
       <br>
       <div class="row">
-        <div class="col-md-6">
-            {% for produitImage in produit.images %}
-
-              <img src="{{ vich_uploader_asset(produitImage, 'imageFile') }}" alt="{{ produitImage.imageAlt }}" class="img-fluid">
-            {% endfor %}
-        </div>
+            <div class="flexslider carousel">
+                <ul class="slides">
+                  {% for produitImage in produit.images %}
+                    <li>
+                      <img src="{{ vich_uploader_asset(produitImage, 'imageFile') }}" alt="{{ produitImage.imageAlt }}" class="img-fluid">
+                    </li>
+                  {% endfor %}
+                  <!-- items mirrored twice, total of 12 -->
+                </ul>
+              </div>
+            
     </div>
   </div>
+
+
 {% endblock body %}

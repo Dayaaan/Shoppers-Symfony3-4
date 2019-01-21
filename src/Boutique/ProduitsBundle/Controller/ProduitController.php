@@ -3,11 +3,15 @@
 namespace Boutique\ProduitsBundle\Controller;
 
 use Faker;
+use FOS\RestBundle\View\View;
 use Boutique\ProduitsBundle\Entity\Image;
 use Boutique\ProduitsBundle\Entity\Produit;
 use Boutique\ProduitsBundle\Entity\Category;
 use Boutique\ProduitsBundle\Form\ProduitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Boutique\ProduitsBundle\Entity\ImagePrincipale;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -42,6 +46,72 @@ class ProduitController extends Controller
             'products' => $products,
             'categories' => $categories
         ));
+    }
+    // si on veut definir une nouvelle route mannuellement
+
+    /**
+     * @Rest\Get("/getproduits")
+     * @Rest\View()
+     */
+
+    public function getProduitsAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository(Produit::class)->findAll();
+        
+        //$newTab = [];
+
+        // foreach($products as $product) {
+            
+        //     $newTab[] = [
+        //         'id' => $product->getId(),
+        //         'name' => $product->getName(),
+        //         'price' => $product->getPrice(),
+        //         'description' => $product->getDescription()
+        //     ];
+        // }
+        //return new JsonResponse($newTab);
+        // Création d'une vue FOSRestBundle
+        //$view = View::create($newTab);
+        $view = View::create($products);
+        $view->setFormat('json');
+
+        // Gestion de la réponse
+        return $view;
+
+    }
+
+
+    public function getProduitAction($id) {
+
+        //$id = $request->get('id'); //recuperer le get dans l'url 
+        // plus besoin de request pour envoyé du JSON
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository(Produit::class)->find($id);
+
+
+
+        $newTab;
+
+        if ($product) {
+
+            $newTab = [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
+                'description' => $product->getDescription()
+            ];
+            return new JsonResponse($newTab);
+
+        } else {
+            return new JsonResponse(
+                ['message' => 'Place not found'], 
+                Response::HTTP_NOT_FOUND
+            );
+        }
+
+        return new Response(null);
+
     }
 
 
