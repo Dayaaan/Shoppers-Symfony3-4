@@ -1,17 +1,17 @@
 <?php
 
-namespace Boutique\FrontBundle\Controller;
+namespace Boutique\ContactBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DefaultController extends Controller
+class ContactController extends Controller
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/contact", name="contact")
      */
     public function indexAction()
     {
-        return $this->render('front/front.html.twig');
+        return $this->render('contact/contact.html.twig');
     }
 }

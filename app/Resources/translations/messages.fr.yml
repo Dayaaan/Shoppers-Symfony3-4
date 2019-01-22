@@ -1,0 +1,27 @@
+home:
+  home: Accueil
+  about: A Propos de nous
+  shop: Boutique
+  catalogue: Catalogue
+  arrivals: Nouveautés
+  contact: Contactez nous
+new:
+  addcategory: Ajouter une catégorie
+  name: Nom
+  description: Description
+  quantity: Quantité
+  categories: liste de categories
+  File: Fichier
+  price: prix 
+product:
+  shopall: Liste des produits
+  categories: Categories
+cart:
+  product: Produit
+  price: Prix
+  quantity: Quantité
+  remove: Supprimé
+  continue: Continuer mes achats
+  total: PANIER TOTAL
+  subtotal: Sous-total
+  checkout: procedé au paiement

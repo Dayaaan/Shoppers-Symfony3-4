@@ -41,7 +41,7 @@
         
                     <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
                         <div class="site-logo">
-                        <a href="/" class="js-logo-clone">Shoppers</a>
+                        <a href="{{ path('home')}}" class="js-logo-clone">Shoppers</a>
                         </div>
                     </div>
         
@@ -59,11 +59,28 @@
                             </li>
                             <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                             <li>
-                            <a href="{{ path('cart')}}" class="site-cart">
-                                <span class="icon icon-shopping_cart"></span>
-                                {{ render(controller('BoutiqueProduitsBundle:Commande:orderCount'))}}
-                            </a>
-                            </li> 
+                              <a href="{{ path('cart')}}" class="site-cart">
+                                  <span class="icon icon-shopping_cart"></span>
+                                  {{ render(controller('BoutiqueProduitsBundle:Commande:orderCount'))}}
+                              </a>
+                            </li>
+                            {% set actualLangue = app.request.locale %}
+                            {% set routeParams = app.request.get('_route_params') %}
+                            {% if actualLangue == 'en' %}
+                            {% set routeParams = routeParams|merge({'_locale': 'fr'}) %}
+                            <li>
+                              <a class="flag" href="{{ path(app.request.get('_route'), routeParams) }}" class="site-cart">
+                                <img src="https://img.icons8.com/color/48/000000/france.png">
+                              </a>
+                            </li>
+                            {% else %}
+                            {% set routeParams = routeParams|merge({'_locale': 'en'}) %}
+                            <li>
+                              <a class="flag" href="{{ path(app.request.get('_route'), routeParams) }}" class="site-cart">
+                                  <img src="https://img.icons8.com/color/48/000000/great-britain.png">
+                              </a>
+                            </li>
+                            {% endif %}
                             <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                         </ul>
                         </div> 
@@ -76,7 +93,7 @@
                 <div class="container">
                     <ul class="site-menu js-clone-nav d-none d-md-block">
                     <li class="has-children active">
-                        <a href="/">Home</a>
+                        <a href="{{ path('home')}}">{{ 'home.home'|trans }}</a>
                         <ul class="dropdown">
                         <li><a href="#">Menu One</a></li>
                         <li><a href="#">Menu Two</a></li>
@@ -92,17 +109,17 @@
                         </ul>
                     </li>
                     <li class="has-children">
-                        <a href="about.html">About</a>
+                        <a href="about.html">{{ 'home.about'|trans }}</a>
                         <ul class="dropdown">
                         <li><a href="#">Menu One</a></li>
                         <li><a href="#">Menu Two</a></li>
                         <li><a href="#">Menu Three</a></li>
                         </ul>
                     </li>
-                    <li><a href="{{ path('produit_index')}}">Shop</a></li>
-                    <li><a href="#">Catalogue</a></li>
-                    <li><a href="#">New Arrivals</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="{{ path('produit_index')}}">{{ 'home.shop'|trans }}</a></li>
+                    <li><a href="#">{{ 'home.catalogue'|trans }}</a></li>
+                    <li><a href="#">{{ 'home.arrivals'|trans }}</a></li>
+                    <li><a href="{{ path('contact')}}">{{ 'home.contact'|trans }}</a></li>
                     </ul>
                 </div>
                 </nav>

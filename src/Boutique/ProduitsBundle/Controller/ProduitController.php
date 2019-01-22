@@ -375,6 +375,24 @@ class ProduitController extends Controller
         
     }
 
+    /**
+    * @Route("/deletetocart/{id}" , name="deletetocart")
+    */
+    public function deleteToCartAction(Request $request,$id) {
+
+        $session = $this->get('session');
+        $cart = $session->get('cart');
+
+        foreach( $cart as $clef => $produit ) {
+
+            if ( $id == $produit['idproduit'] ) {
+                unset($cart[$clef]);
+            }
+        }
+        $session->set('cart', $cart);
+        return $this->redirectToRoute('cart');
+
+    }
 
     
 }

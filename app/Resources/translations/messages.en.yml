@@ -1,0 +1,27 @@
+home:
+  home: Home
+  about: About
+  shop: Shop
+  catalogue: Catalogue
+  arrivals: New Arrivals
+  contact: Contact
+new:
+  addcategory: Add category
+  name: Name
+  description: Description
+  quantity: Quantity
+  categories: Categories
+  File: File
+  price: price 
+product:
+  shopall: Shop All
+  categories: Categories
+cart:
+  product: Product
+  price: Price
+  quantity: Quantity
+  remove: Remove
+  continue: Continue Shopping
+  total: CART TOTAL
+  subtotal: Subtotal
+  checkout: Proceed to checkout

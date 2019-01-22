@@ -443,6 +443,9 @@ a {
               .site-mobile-menu .site-nav-wrap > li > ul > li > ul > li > a {
                 font-size: 16px;
                 padding-left: 60px; }
+.flag {
+  width: 10%;
+}
 
 /* Blocks */
 .site-blocks-cover {

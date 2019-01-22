@@ -22,18 +22,20 @@ security:
             security: false
 
         main:
-            anonymous: ~
             pattern: ^/
             form_login:
+                use_referer: true
                 always_use_default_target_path: true
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                check_path:   fos_user_security_check
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path:     /
                 always_remember_me: true
-            logout:       true
+            logout:
+                path: fos_user_security_logout
             anonymous:    true
 
     access_control:

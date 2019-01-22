@@ -1,3 +1,8 @@
+boutique_contact:
+    resource: "@BoutiqueContactBundle/Controller/"
+    type:     annotation
+    prefix:   /contact
+
 boutique_user:
     resource: "@BoutiqueUserBundle/Controller/"
     type:     annotation
@@ -6,15 +11,49 @@ boutique_user:
 boutique_front:
     resource: "@BoutiqueFrontBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /{_locale}
+    defaults: { _locale: fr }
+    requirements:
+        _locale: fr|en
 
 boutique_produits:
     resource: "@BoutiqueProduitsBundle/Controller/"
     type:     annotation
-    prefix:   /boutique
+    prefix:   /{_locale}/boutique
+    defaults: { _locale: fr }
+    requirements:
+        _locale: fr|en
 
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix: /{_locale}/
+    defaults: { _locale: fr }
+    requirements:
+        _locale: fr|en
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /{_locale}/profile
+    defaults: { _locale: fr }
+    requirements:
+        _locale: fr|en
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /{_locale}/register
+    defaults: { _locale: fr }
+    requirements:
+        _locale: fr|en
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /{_locale}/resetting
+    defaults: { _locale: fr }
+    requirements:
+        _locale: fr|en
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /{_locale}/profile
+    defaults: { _locale: fr }
+    requirements:
+        _locale: fr|en
 
 produits:
     type:     rest
