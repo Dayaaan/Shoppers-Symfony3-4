@@ -40,7 +40,7 @@ class StripeClient
       throw $e;
     }
     $commande->setChargeId($charge->id);
-    $commande->setPaiemenStatus(true);
+    $commande->setPaiementStatus(true);
     //$user->setPremium($charge->paid);
     $this->em->flush();
   }

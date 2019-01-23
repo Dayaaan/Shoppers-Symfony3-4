@@ -5,9 +5,13 @@ namespace Boutique\ProduitsBundle\Controller;
 use Boutique\ProduitsBundle\Entity\Produit;
 use Boutique\ProduitsBundle\Entity\Commande;
 use Symfony\Component\HttpFoundation\Request;
+use Boutique\ProduitsBundle\Form\CommandeType;
 use Boutique\ProduitsBundle\Entity\ProduitCommande;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Boutique\ProduitsBundle\Controller\ProduitController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -59,6 +63,7 @@ class CommandeController extends Controller
 
         $commande = new Commande();
         //Pré remplir le formulaire commande si l'utilisateur est connecté
+        
         if ($this->getUser()) {
             $commande->setName($this->getUser()->getName());
             $commande->setFirstname($this->getUser()->getFirstName());
@@ -66,6 +71,7 @@ class CommandeController extends Controller
             $commande->setCity($this->getUser()->getCity());
             $commande->setZipcode($this->getUser()->getZipcode());
             $commande->setEmail($this->getUser()->getEmail());
+            $commande->setStates($this->getUser()->getStates());
             $commande->setUser($this->getUser());
         }
         $commande->setTotalAmount($subtotal);
@@ -76,7 +82,15 @@ class CommandeController extends Controller
         $totalSession = $session->get('totalsession');
         dump($totalSession);
         
-        $form = $this->createForm('Boutique\ProduitsBundle\Form\CommandeType', $commande);
+        //$form = $this->createForm('Boutique\ProduitsBundle\Form\CommandeType', $commande);
+        $form = $this->get('form.factory')
+                     ->createNamedBuilder('payment-form')
+                     ->add('token', HiddenType::class, [
+                            'constraints' => [new NotBlank()],
+                     ])
+                     ->add('submit', SubmitType::class)
+                     ->add('commande', CommandeType::class)
+                     ->getForm();
         $form->handleRequest($request);
     
         $quantity = $request->request->get('quantity');
@@ -91,7 +105,7 @@ class CommandeController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($commande);
-
+             
            
         for ($i = 0; $i < count($orders); $i++) {
             $produit = $em->getRepository(Produit::class)->find($orders[$i]['productDetails']->getId());
@@ -104,7 +118,29 @@ class CommandeController extends Controller
             dump($produitCommande);
         }
         
-            $em->flush();
+        $em->flush();
+
+        $idCommande = $commande->getId();
+
+        dump($idCommande);
+
+        $order = $this->getDoctrine()->getRepository(Commande::class)->find($idCommande);
+
+        if ($request->isMethod('POST')) {
+            //$form->handleRequest($request);
+            if ($form->isValid()) {
+                try {
+                    $this->get('app.client.stripe')->createPremiumCharge($order, $form->get('token')->getData());
+                    $redirect = $this->get('session')->get('premium_redirect');
+                } catch (\Stripe\Error\Base $e) {
+                    $this->addFlash('warning', sprintf('Unable to take payment, %s', $e instanceof \Stripe\Error\Card ? lcfirst($e->getMessage()) : 'please try again.'));
+                    $redirect = $this->generateUrl('paiement_stripe');
+                } finally {
+                    //return $this->redirect($redirect);
+                }
+            }
+        }
+
 
             $message = (new \Swift_Message('Votre commande à bien été validé'))
                 ->setFrom('dayaaan.vu@gmail.com')
@@ -136,7 +172,8 @@ class CommandeController extends Controller
             'form' => $form->createView(),
             'orders' => $orders,
             'subtotal' => $subtotal,
-            'newQuantity' => $quantity
+            'newQuantity' => $quantity,
+            'stripe_public_key' => $this->getParameter('stripe_public_key')
         ));
     }
     /**
@@ -241,4 +278,5 @@ class CommandeController extends Controller
             ->getForm()
         ;
     }
+    
 }
