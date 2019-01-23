@@ -140,11 +140,12 @@ class ProduitController extends Controller
                 $products[$i]['quantity'] = $cart[$i]['qteproduit'];
                 $products[$i]['total'] = $products[$i]['productDetails']->getPrice() * $cart[$i]['qteproduit'];
                 $subtotal += $products[$i]['total'];
+                
                 dump($products);
-            }   
+            }
+            
             dump($products);
 
-    
 
             $orders = $session->set('orders', $products); 
         } 

@@ -19,7 +19,7 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-        /**
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -60,14 +60,16 @@ class User extends BaseUser
      * @ORM\Column(name="zipcode", type="string", length=255)
      */
     private $zipcode;
+    /**
+    * @ORM\Column(name="charge_id", type="string", length=255, nullable=true)
+    */
+    protected $chargeId;
 
     public function __construct()
     {
         parent::__construct();
         // your own logic
     }
-
-
 
     /**
      * Set name
@@ -187,5 +189,29 @@ class User extends BaseUser
     public function getZipcode()
     {
         return $this->zipcode;
+    }
+
+    /**
+     * Set states
+     *
+     * @param string $states
+     *
+     * @return User
+     */
+    public function setStates($states)
+    {
+        $this->states = $states;
+
+        return $this;
+    }
+
+    /**
+     * Get states
+     *
+     * @return string
+     */
+    public function getStates()
+    {
+        return $this->states;
     }
 }

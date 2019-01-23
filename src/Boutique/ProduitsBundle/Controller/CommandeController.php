@@ -68,6 +68,13 @@ class CommandeController extends Controller
             $commande->setEmail($this->getUser()->getEmail());
             $commande->setUser($this->getUser());
         }
+        $commande->setTotalAmount($subtotal);
+
+        $commande->setPaiementStatus(false);
+
+        $totalSession = $session->set('totalsession', $subtotal);
+        $totalSession = $session->get('totalsession');
+        dump($totalSession);
         
         $form = $this->createForm('Boutique\ProduitsBundle\Form\CommandeType', $commande);
         $form->handleRequest($request);
@@ -98,7 +105,6 @@ class CommandeController extends Controller
         }
         
             $em->flush();
-            $session->clear();
 
             $message = (new \Swift_Message('Votre commande à bien été validé'))
                 ->setFrom('dayaaan.vu@gmail.com')
@@ -116,7 +122,13 @@ class CommandeController extends Controller
             );
             $this->get('mailer')->send($message);
 
-            return $this->render('commande/thankyou.html.twig', array('id' => $commande->getId()));
+            return $this->redirectToRoute('paiement_stripe', array(
+                'id' => $commande->getId(),
+                'orders' => $orders,
+                'subtotal' => $subtotal,
+                'newQuantity' => $quantity,
+                'totalSession' => $totalSession
+            ));
         }
 
         return $this->render('commande/new.html.twig', array(

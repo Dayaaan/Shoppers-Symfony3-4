@@ -33,7 +33,7 @@ class CategoryRestController extends Controller {
 
     /**
      * @Rest\Post("/postcategory")
-     * @Rest\View()
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
      */
 
     public function postCategoryAction(Request $request) {
@@ -60,7 +60,7 @@ class CategoryRestController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $category = $em->getRepository(Category::class)
-                    ->find($request->get('id'));
+                       ->find($request->get('id'));
 
         if ($category) {
             $em->remove($category);

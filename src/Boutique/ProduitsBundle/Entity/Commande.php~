@@ -385,28 +385,4 @@ class Commande
     {
         return $this->paiementStatus;
     }
-
-    /**
-     * Set totalAmount
-     *
-     * @param float $totalAmount
-     *
-     * @return Commande
-     */
-    public function setTotalAmount($totalAmount)
-    {
-        $this->totalAmount = $totalAmount;
-
-        return $this;
-    }
-
-    /**
-     * Get totalAmount
-     *
-     * @return float
-     */
-    public function getTotalAmount()
-    {
-        return $this->totalAmount;
-    }
 }
