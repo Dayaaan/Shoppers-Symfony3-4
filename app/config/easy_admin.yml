@@ -3,6 +3,18 @@ easy_admin:
     design:
         brand_color: '#A52A2A'
     entities:
+        ImagePrincipale: 
+            class: Boutique\ProduitsBundle\Entity\ImagePrincipale
+            list:
+                fields:
+                    - 'id'
+                    - { property: 'imageName', type: 'image', base_path: '%app.path.product_images%', label: 'ImagePrincipale' }
+            show:
+                fields:
+                    - { property: 'imageName', type: 'image', base_path: '%app.path.product_images%', label: 'ImagePrincipale' }
+            edit:
+                fields:
+                    - 'imageAlt'
         User:
             class: Boutique\UserBundle\Entity\User
         Commande:
@@ -20,8 +32,7 @@ easy_admin:
                 fields:
                     - { property: 'imagePrincipale.imageName', type: 'image', base_path: '%app.path.product_images%' }
                     - { property: 'images.imageName', type: 'image', base_path: '%app.path.product_images%' }
-                    - { property: 'imagePrincipale', type: 'image', base_path: '%app.path.product_images%' }
-                    
+                    - { property: 'imagePrincipale', template: 'admin/image.html.twig' }
             form:
                 fields:
                     - 'name'
@@ -29,8 +40,9 @@ easy_admin:
                     - 'price'
                     - 'quantity'
                     - 'categories'
+                    - { property: 'imagePrincipale', type: 'Boutique\ProduitsBundle\Form\ImagePrincipaleType' }
                     - { property: 'images', type: 'collection', type_options: { entry_type: 'Boutique\ProduitsBundle\Form\ImageType' }}
-                    - { property: 'imagePrincipale', type: 'file', label: 'Upload logo', help: 'Select file to upload / change logo' }
+
 
                 
 
