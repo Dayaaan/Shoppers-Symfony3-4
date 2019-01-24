@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: easy_admin.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -11,6 +12,7 @@ parameters:
         currency: EUR
         decimal: true
         premium_amount: 1
+    app.path.product_images: /images/products
 
 framework:
     #esi: ~
@@ -110,6 +112,10 @@ vich_uploader:
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true
+    mappings:
+        product_images:
+            uri_prefix:         '%app.path.product_images%'
+            upload_destination: '%kernel.root_dir%/../web%app.path.product_images%'
 
 #Pour enlever le format (debug:router)        
 fos_rest:
@@ -117,4 +123,5 @@ fos_rest:
         include_format: false
     view:
         view_response_listener: true
+
 

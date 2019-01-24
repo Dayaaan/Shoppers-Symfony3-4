@@ -26,8 +26,8 @@ class CommandeType extends AbstractType
                 ->add('city', TextType::class)
                 ->add('zipcode', TextType::class)
                 ->add('states', ChoiceType::class, [
-                    'placeholder' => 'Choose a states',
-                    'choices' => array_flip($countries)
+                    'choices' => array_flip($countries),
+                    'choices_as_values' => true
                 ]);
     }/**
      * {@inheritdoc}

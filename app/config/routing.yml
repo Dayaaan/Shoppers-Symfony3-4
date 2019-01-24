@@ -55,6 +55,11 @@ fos_user_change_password:
     requirements:
         _locale: fr|en
 
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/AdminController.php"
+    type:     annotation
+    prefix:   /{_locale}/admin
+
 produits:
     type:     rest
     resource: Boutique\ProduitsBundle\Controller\ProduitController

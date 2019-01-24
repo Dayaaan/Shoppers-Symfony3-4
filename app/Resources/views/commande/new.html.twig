@@ -38,19 +38,19 @@
               <div class="col-md-6">
                   {{ form_label(form.commande.name) }}
                   {{ form_errors(form.commande.name) }}
-                  {{ form_widget(form.commande.name) }}
+                  {{ form_widget(form.commande.name,{'attr': {'value': app.user.name}}) }}
               </div>
               <div class="col-md-6">
                   {{ form_label(form.commande.firstname) }}
                   {{ form_errors(form.commande.firstname) }}
-                  {{ form_widget(form.commande.firstname) }}
+                  {{ form_widget(form.commande.firstname,{'attr': {'value': app.user.firstname}}) }}
               </div>
             </div>
             <div class="form-group row">
                 <div class="col-md-12">
                     {{ form_label(form.commande.email) }}
                     {{ form_errors(form.commande.email) }}
-                    {{ form_widget(form.commande.email) }}
+                    {{ form_widget(form.commande.email,{'attr': {'value': app.user.email}}) }}
                 </div>
               </div>
 
@@ -58,7 +58,7 @@
               <div class="col-md-12">
                   {{ form_label(form.commande.adress) }}
                   {{ form_errors(form.commande.adress) }}
-                  {{ form_widget(form.commande.adress) }}
+                  {{ form_widget(form.commande.adress,{'attr': {'value': app.user.adress}}) }}
               </div>
             </div>
 
@@ -66,14 +66,14 @@
                 <div class="col-md-12">
                     {{ form_label(form.commande.zipcode) }}
                     {{ form_errors(form.commande.zipcode) }}
-                    {{ form_widget(form.commande.zipcode) }}
+                    {{ form_widget(form.commande.zipcode,{'attr': {'value': app.user.zipcode}}) }}
                 </div>
             </div>
             <div class="form-group row">
               <div class="col-md-12">
                   {{ form_label(form.commande.states) }}
                   {{ form_errors(form.commande.states) }}
-                  {{ form_widget(form.commande.states) }}
+                  {{ form_widget(form.commande.states,{'value': app.user.states}) }}
               </div>
           </div>
 
@@ -81,17 +81,9 @@
                 <div class="col-md-12">
                     {{ form_label(form.commande.city) }}
                     {{ form_errors(form.commande.city) }}
-                    {{ form_widget(form.commande.city) }}
+                    {{ form_widget(form.commande.city,{'attr': {'value': app.user.city}}) }}
                 </div>
             </div>
-
-            
-
-            
-
-
-          
-
 
           </div>
         </div>
@@ -174,7 +166,7 @@
                 </div>
 
                 <div class="form-group">
-                  <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">Place Order</button>
+                  <button type="submit" class="btn btn-primary btn-lg py-3 btn-block">Payment</button>
                 </div>
 
               </div>

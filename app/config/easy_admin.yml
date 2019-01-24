@@ -1,0 +1,38 @@
+easy_admin:
+    site_name: '<em>Shoppers</em>'
+    design:
+        brand_color: '#A52A2A'
+    entities:
+        User:
+            class: Boutique\UserBundle\Entity\User
+        Commande:
+            class: Boutique\ProduitsBundle\Entity\Commande
+        Produit:
+            class: Boutique\ProduitsBundle\Entity\Produit
+            list:
+                fields:
+                    - { property: 'name', type: 'string', label: 'Name'}
+                    - { property: 'price', type: 'float', label: 'Price'}
+                    - { property: 'quantity', type: 'integer', label: 'Quantité'}
+                    - { property: 'imagePrincipale.imageName', type: 'image', base_path: '%app.path.product_images%', label: 'ImagePrincipale' }
+                    
+            show:
+                fields:
+                    - { property: 'imagePrincipale.imageName', type: 'image', base_path: '%app.path.product_images%' }
+                    - { property: 'images.imageName', type: 'image', base_path: '%app.path.product_images%' }
+        
+                    
+            form:
+                fields:
+                    - 'name'
+                    - 'description'
+                    - 'price'
+                    - 'quantity'
+                    - 'categories'
+                    - { property: 'images', type: 'collection', type_options: { entry_type: 'Boutique\ProduitsBundle\Form\ImageType' }}
+                    
+
+                
+
+        Category:
+            class: Boutique\ProduitsBundle\Entity\Category

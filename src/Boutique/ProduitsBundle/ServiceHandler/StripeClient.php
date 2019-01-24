@@ -6,7 +6,6 @@ use Stripe\Charge;
 use Stripe\Stripe;
 use Stripe\Error\Base;
 use Psr\Log\LoggerInterface;
-use Boutique\UserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Boutique\ProduitsBundle\Entity\Commande;
 
@@ -27,11 +26,12 @@ class StripeClient
   }
   public function createPremiumCharge(Commande $commande, $token)
   {
+
     try {
       $charge = \Stripe\Charge::create([
-        'amount' => $commande->getTotalAmount(), //$this->config['decimal'] ? $this->config['premium_amount'] * 100 : $this->config['premium_amount'],
+        'amount' => $this->config['decimal'] ? $commande->getTotalAmount() * 100 : $commande->getTotalAmount(),
         'currency' => $this->config['currency'],
-        'description' => 'Premium blog access',
+        'description' => 'Shoppers',
         'source' => $token,
         'receipt_email' => $commande->getEmail(),
       ]);
@@ -40,7 +40,8 @@ class StripeClient
       throw $e;
     }
     $commande->setChargeId($charge->id);
-    $commande->setPaiementStatus(true);
+    $commande->setPaiementStatus($charge->paid);
+    dump($charge);
     //$user->setPremium($charge->paid);
     $this->em->flush();
   }

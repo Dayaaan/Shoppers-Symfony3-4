@@ -88,7 +88,6 @@ class CommandeController extends Controller
                      ->add('token', HiddenType::class, [
                             'constraints' => [new NotBlank()],
                      ])
-                     ->add('submit', SubmitType::class)
                      ->add('commande', CommandeType::class)
                      ->getForm();
         $form->handleRequest($request);
@@ -102,69 +101,69 @@ class CommandeController extends Controller
                 }
             }
         }
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($commande);
-             
-           
-        for ($i = 0; $i < count($orders); $i++) {
-            $produit = $em->getRepository(Produit::class)->find($orders[$i]['productDetails']->getId());
-            $produitCommande = new ProduitCommande();
-            $produitCommande->setQuantity($orders[$i]['quantity']);
-            $produitCommande->setPrice($orders[$i]['productDetails']->getPrice());
-            $produitCommande->setProduit($produit);
-            $produitCommande->setCommande($commande);
-            $em->persist($produitCommande);
-            dump($produitCommande);
-        }
-        
-        $em->flush();
-
-        $idCommande = $commande->getId();
-
-        dump($idCommande);
-
-        $order = $this->getDoctrine()->getRepository(Commande::class)->find($idCommande);
-
         if ($request->isMethod('POST')) {
-            //$form->handleRequest($request);
-            if ($form->isValid()) {
-                try {
-                    $this->get('app.client.stripe')->createPremiumCharge($order, $form->get('token')->getData());
-                    $redirect = $this->get('session')->get('premium_redirect');
-                } catch (\Stripe\Error\Base $e) {
-                    $this->addFlash('warning', sprintf('Unable to take payment, %s', $e instanceof \Stripe\Error\Card ? lcfirst($e->getMessage()) : 'please try again.'));
-                    $redirect = $this->generateUrl('paiement_stripe');
-                } finally {
-                    //return $this->redirect($redirect);
-                }
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($commande);
+                 
+               
+            for ($i = 0; $i < count($orders); $i++) {
+                $produit = $em->getRepository(Produit::class)->find($orders[$i]['productDetails']->getId());
+                $produitCommande = new ProduitCommande();
+                $produitCommande->setQuantity($orders[$i]['quantity']);
+                $produitCommande->setPrice($orders[$i]['productDetails']->getPrice());
+                $produitCommande->setProduit($produit);
+                $produitCommande->setCommande($commande);
+                $em->persist($produitCommande);
+                dump($produitCommande);
+            }
+            $em->flush();
+
+            $order = $this->getDoctrine()->getRepository(Commande::class)->find($commande->getId());
+
+            try {
+                $this->get('app.client.stripe')->createPremiumCharge($order, $form->get('token')->getData());
+                $session = $this->get('session');
+                $session->clear();
+                $redirect = $this->render('commande/thankyou.html.twig');
+
+            } catch (\Stripe\Error\Base $e) {
+                $this->addFlash('warning', sprintf('Unable to take payment, %s', $e instanceof \Stripe\Error\Card ? lcfirst($e->getMessage()) : 'please try again.'));
+                $redirect = $this->redirectToRoute('checkout');
+            } finally {
+                return $redirect;
             }
         }
+        
+        
+        
 
 
-            $message = (new \Swift_Message('Votre commande à bien été validé'))
-                ->setFrom('dayaaan.vu@gmail.com')
-                ->setTo($commande->getEmail())
-                ->setBody(
-                    $this->renderView(
-                        'email/validateorder.html.twig',
-                        [
-                            'produitCommande' => $produitCommande,
-                            'orders' => $orders,
-                            'subtotal' => $subtotal
-                        ]
-                    ),
-                    'text/html'
-            );
-            $this->get('mailer')->send($message);
 
-            return $this->redirectToRoute('paiement_stripe', array(
-                'id' => $commande->getId(),
-                'orders' => $orders,
-                'subtotal' => $subtotal,
-                'newQuantity' => $quantity,
-                'totalSession' => $totalSession
-            ));
+
+            // $message = (new \Swift_Message('Votre commande à bien été validé'))
+            //     ->setFrom('dayaaan.vu@gmail.com')
+            //     ->setTo($commande->getEmail())
+            //     ->setBody(
+            //         $this->renderView(
+            //             'email/validateorder.html.twig',
+            //             [
+            //                 'produitCommande' => $produitCommande,
+            //                 'orders' => $orders,
+            //                 'subtotal' => $subtotal
+            //             ]
+            //         ),
+            //         'text/html'
+            // );
+            // $this->get('mailer')->send($message);
+
+            // return $this->redirectToRoute('paiement_stripe', array(
+            //     'id' => $commande->getId(),
+            //     'orders' => $orders,
+            //     'subtotal' => $subtotal,
+            //     'newQuantity' => $quantity,
+            //     'totalSession' => $totalSession
+            // ));
         }
 
         return $this->render('commande/new.html.twig', array(

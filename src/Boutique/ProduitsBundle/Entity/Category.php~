@@ -101,28 +101,4 @@ class Category
     public function __toString() {
         return $this->name;
     }
-
-    /**
-     * Set imagePrincipale
-     *
-     * @param \Boutique\ProduitsBundle\Entity\ImagePrincipale $imagePrincipale
-     *
-     * @return Category
-     */
-    public function setImagePrincipale(\Boutique\ProduitsBundle\Entity\ImagePrincipale $imagePrincipale = null)
-    {
-        $this->imagePrincipale = $imagePrincipale;
-
-        return $this;
-    }
-
-    /**
-     * Get imagePrincipale
-     *
-     * @return \Boutique\ProduitsBundle\Entity\ImagePrincipale
-     */
-    public function getImagePrincipale()
-    {
-        return $this->imagePrincipale;
-    }
 }
