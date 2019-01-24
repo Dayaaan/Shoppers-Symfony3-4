@@ -20,7 +20,7 @@ easy_admin:
                 fields:
                     - { property: 'imagePrincipale.imageName', type: 'image', base_path: '%app.path.product_images%' }
                     - { property: 'images.imageName', type: 'image', base_path: '%app.path.product_images%' }
-        
+                    - { property: 'imagePrincipale', type: 'image', base_path: '%app.path.product_images%' }
                     
             form:
                 fields:
@@ -30,7 +30,7 @@ easy_admin:
                     - 'quantity'
                     - 'categories'
                     - { property: 'images', type: 'collection', type_options: { entry_type: 'Boutique\ProduitsBundle\Form\ImageType' }}
-                    
+                    - { property: 'imagePrincipale', type: 'file', label: 'Upload logo', help: 'Select file to upload / change logo' }
 
                 
 
