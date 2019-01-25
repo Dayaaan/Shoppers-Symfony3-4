@@ -5,5 +5,7 @@ services:
     app.client.stripe:
         class: Boutique\ProduitsBundle\ServiceHandler\StripeClient
         arguments: ['%stripe_secret_key%', '%payment%', '@doctrine.orm.entity_manager', '@logger']
+    boutique_produit.display.message:
+        class: Boutique\ProduitsBundle\ServiceHandler\DisplayMessage
 
     

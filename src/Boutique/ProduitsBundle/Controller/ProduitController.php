@@ -47,6 +47,29 @@ class ProduitController extends Controller
             'categories' => $categories
         ));
     }
+    /**   
+    * @Route("/sortproductsbyname", name="sortproducts")
+    */
+
+    public function sortProductsByNameAction(Request $request) {
+        
+        if ($request->isXmlHttpRequest()) {
+
+            $orderby = $request->request->get('orderby');
+            $column = $request->request->get('column');
+
+            $em = $this->getDoctrine()->getManager();
+
+            if ($column == 'name') {
+                $products = $em->getRepository(Produit::class)->findBy([],['name' => $orderby]);
+            } else {
+                $products = $em->getRepository(Produit::class)->findBy([],['price' => $orderby]);
+            }
+            return $this->render('produit/productajax.html.twig', ['products' => $products]);
+
+        }   
+    }
+
     // si on veut definir une nouvelle route mannuellement
 
     /**
@@ -81,15 +104,12 @@ class ProduitController extends Controller
 
     }
 
-
     public function getProduitAction($id) {
 
         //$id = $request->get('id'); //recuperer le get dans l'url 
         // plus besoin de request pour envoyé du JSON
         $em = $this->getDoctrine()->getManager();
         $product = $em->getRepository(Produit::class)->find($id);
-
-
 
         $newTab;
 
@@ -322,7 +342,7 @@ class ProduitController extends Controller
 
         $categories = $em->getRepository(Category::class)->findAll();
 
-        return $this->render("produits/index.html.twig",
+        return $this->render("produit/index.html.twig",
             [
                 'products' => $products,
                 'categories' => $categories
@@ -394,6 +414,5 @@ class ProduitController extends Controller
         return $this->redirectToRoute('cart');
 
     }
-
-    
+   
 }

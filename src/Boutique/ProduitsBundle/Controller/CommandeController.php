@@ -134,12 +134,6 @@ class CommandeController extends Controller
                 return $redirect;
             }
         }
-        
-        
-        
-
-
-
 
             // $message = (new \Swift_Message('Votre commande à bien été validé'))
             //     ->setFrom('dayaaan.vu@gmail.com')
