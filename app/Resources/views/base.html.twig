@@ -35,7 +35,7 @@
                     <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
                         <form action="{{ path('searchproducts')}}" method="POST" class="site-block-top-search">
                         <span class="icon icon-search2"></span>
-                        <input type="text" class="form-control border-0" name="search" placeholder="Search">
+                        <input type="text" class="form-control border-0" id="search" name="search" placeholder="Search">
                         </form>
                     </div>
         
@@ -213,6 +213,11 @@
         <script src="{{ asset("js/jquery.magnific-popup.min.js") }}"></script>
         <script src="{{ asset("js/aos.js") }}"></script>
         <script src="{{ asset("js/main.js") }}"></script>
+        <script
+          src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+          integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+          crossorigin="anonymous"></script>
+        <script src="{{ asset('bundles/pugxautocompleter/js/autocompleter-jqueryui.js') }}"></script>
         {% block js %}{% endblock js %}
 
     </body>

@@ -5,7 +5,13 @@ services:
     app.client.stripe:
         class: Boutique\ProduitsBundle\ServiceHandler\StripeClient
         arguments: ['%stripe_secret_key%', '%payment%', '@doctrine.orm.entity_manager', '@logger']
-    boutique_produit.display.message:
+    boutique_produits.display.message:
         class: Boutique\ProduitsBundle\ServiceHandler\DisplayMessage
+    boutique_produits.event_listener.redirection_subscriber:
+        class: Boutique\ProduitsBundle\EventListener\RedirectionSubscriber
+        arguments: ['@router', '%supported_languages%', '%locale%']
+        tags:
+          - { name: kernel.event_subscriber }
+
 
     

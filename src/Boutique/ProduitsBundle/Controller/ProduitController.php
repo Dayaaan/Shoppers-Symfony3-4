@@ -25,7 +25,35 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
  */
 class ProduitController extends Controller
 {
+    /**
+    * @Route("/searchproducts" , name="searchproducts")
+    */
+    //FORMULAIRE SEARCH
+      
+    public function searchProductsAction(Request $request) {
 
+        // $_GET parameters
+        //$request->query->get('name');
+    
+        // $_POST parameters
+        // $request->request->get('name');
+    
+        $em = $this->getDoctrine()->getManager();
+
+        //POST
+        $search = $request->request->get('search');
+
+        $products = $em->getRepository(Produit::class)->sortProductByName($search);
+
+        $categories = $em->getRepository(Category::class)->findAll();
+
+        return $this->render("produit/index.html.twig",
+            [
+                'products' => $products,
+                'categories' => $categories
+            ]
+        );
+    }
     /**
      * Lists all produit entities.
      *
@@ -40,7 +68,7 @@ class ProduitController extends Controller
 
         $categories = $em->getRepository('BoutiqueProduitsBundle:Category')->findAll();
 
-        dump($categories);
+        //dump($categories);
 
         return $this->render('produit/index.html.twig', array(
             'products' => $products,
@@ -144,9 +172,7 @@ class ProduitController extends Controller
        
         $cart = $session->get('cart');
 
-
-        dump($cart);
-
+        //dump($cart);
 
         $em = $this->getDoctrine()->getManager();
 
@@ -161,10 +187,10 @@ class ProduitController extends Controller
                 $products[$i]['total'] = $products[$i]['productDetails']->getPrice() * $cart[$i]['qteproduit'];
                 $subtotal += $products[$i]['total'];
                 
-                dump($products);
+                //dump($products);
             }
             
-            dump($products);
+            //dump($products);
 
 
             $orders = $session->set('orders', $products); 
@@ -218,10 +244,10 @@ class ProduitController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $x = $form->getData();
-            dump($x);
+            //dump($x);
 
             $images = $x->getImages();
-            dump($images);
+            //dump($images);
 
             foreach ($images as $image) {
                 $image->setProduit($produit);
@@ -320,35 +346,7 @@ class ProduitController extends Controller
         ;
     }
 
-    /**
-    * @Route("/searchproducts" , name="searchproducts")
-    */
-    //FORMULAIRE SEARCH
-      
-    public function searchProductsAction(Request $request) {
-
-    // $_GET parameters
-    //$request->query->get('name');
-
-    // $_POST parameters
-    // $request->request->get('name');
-
-        $em = $this->getDoctrine()->getManager();
-
-        //POST
-        $search = $request->request->get('search');
-
-        $products = $em->getRepository(Produit::class)->sortProductByName($search);
-
-        $categories = $em->getRepository(Category::class)->findAll();
-
-        return $this->render("produit/index.html.twig",
-            [
-                'products' => $products,
-                'categories' => $categories
-            ]
-        );
-    }
+    
 
     /**
     * @Route("/addtocart/{id}" , name="addtocart")
@@ -390,7 +388,7 @@ class ProduitController extends Controller
 
         $getCart = $session->get('cart');
 
-        dump($getCart);
+        //dump($getCart);
 
         return $this->redirectToRoute("cart");
         

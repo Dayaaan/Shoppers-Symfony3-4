@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="Boutique\ProduitsBundle\Repository\CategoryRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Category
 {
@@ -132,35 +131,4 @@ class Category
     }
 
 
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     *
-     * @return Category
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function updatedAtEvent() {
-        $this->updatedAt = new \DateTime();
-    }
 }
