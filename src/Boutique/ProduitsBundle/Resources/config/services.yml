@@ -14,7 +14,7 @@ services:
           - { name: kernel.event_subscriber }
     boutique_produits.event_listener.connexion_subscriber:
         class: Boutique\ProduitsBundle\EventListener\ConnexionSubscriber
-        arguments: ['@router','@security.authorization_checker']
+        arguments: ['@router','@service_container']
         tags:
           - { name: kernel.event_subscriber }
 

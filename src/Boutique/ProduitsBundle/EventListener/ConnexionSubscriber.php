@@ -12,12 +12,12 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class ConnexionSubscriber implements EventSubscriberInterface
 {
     private $router;
-    private $authorization_checker;
+    private $container;
 
-    public function __construct(RouterInterface $router, $authorization_checker) {
+    public function __construct(RouterInterface $router, $container) {
 
         $this->router = $router;
-        $this->authorization_checker = $authorization_checker;
+        $this->container = $container;
         
     }
     public function onKernelRequest(GetResponseEvent $event) {
@@ -26,10 +26,10 @@ class ConnexionSubscriber implements EventSubscriberInterface
 
         $actualPath = $request->attributes->get('_route');
 
-        dump($this->authorization_checker->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'));
+        dump($this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'));
 
         if ( $actualPath == 'checkout'){
-            if ($this->authorization_checker->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')){
+            if ($this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')){
                 $event->setResponse(new RedirectResponse( $this->router->generate('fos_user_security_login', array('_locale'=> "fr")) ));
             }
 
