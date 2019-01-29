@@ -12,6 +12,11 @@ services:
         arguments: ['@router', '%supported_languages%', '%locale%']
         tags:
           - { name: kernel.event_subscriber }
+    boutique_produits.event_listener.connexion_subscriber:
+        class: Boutique\ProduitsBundle\EventListener\ConnexionSubscriber
+        arguments: ['@router','@security.authorization_checker']
+        tags:
+          - { name: kernel.event_subscriber }
 
 
     

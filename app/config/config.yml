@@ -15,7 +15,8 @@ parameters:
     app.path.product_images: /images/products
     stripe_public_key: pk_test_6IG7gBljLaaH3cREvtTDMQJA
     stripe_secret_key: sk_test_tW4dEiY5dQVx18Q9gzEHxwxH
-    supported_languages: ['fr','en', 'es', 'zh', 'vn']
+    supported_languages: ['fr','en']
+    app.locales: fr|en
 framework:
     #esi: ~
     translator: { fallbacks: ['en', 'fr'] }

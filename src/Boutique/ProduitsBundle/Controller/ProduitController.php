@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * Produit controller.
- *
+ * 
  * @Route("produit")
  */
 class ProduitController extends Controller

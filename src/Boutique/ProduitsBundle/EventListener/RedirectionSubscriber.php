@@ -33,32 +33,28 @@ class RedirectionSubscriber implements EventSubscriberInterface
         // step 1 : recuperer le locale
         //dump($event->getRequest()->getLocale()); //fr
         //dump($this->routeCollection);
-
-        $path = $event->getRequest()->getPathInfo();
-        //dump($path);
-        $path = substr($path, 3);
-        $routeMatch = false;
-
-        foreach($this->routeCollection as $route) {
-            if ( "/{_locale}".$path == $route->getPath() ) {
-                $routeMatch = true;
-                dump($path);
-                dump($routeMatch);
-                break;
-                
-            }
-        } 
-        $languageLocale = substr($event->getRequest()->getPreferredLanguage(),0,-3);
-
-        if ($routeMatch) {
+        $request = $event->getRequest();
+        $actualPath = $request->getPathInfo();
+        $routeParams = $request->attributes->get('_locale');
+        $languageLocale = substr($request->getPreferredLanguage(),0,2);
+        dump("language locale : " . $languageLocale);
+        dump("routeparams: ".$routeParams);
+        if($this->checkLanguage($routeParams) == false) {
+            $routeMatch = false;
+            foreach($this->routeCollection as $route) {
+                if ( "/{_locale}" . $actualPath == $route->getPath() ) {
+                    $routeMatch = true;
+                    break;                   
+                }
+            } 
+            if ($routeMatch) {
             
-            if ($languageLocale == "" || checklanguage($languageLocale) == false ) {
-                $languageLocale = $this->locale;
-            }
-               
+                if ($this->checkLanguage($languageLocale) == false || $this->checkLanguage($languageLocale) == "" || ($actualPath == "/" && $this->checkLanguage($languageLocale) == false)) {
+                    $languageLocale = $this->locale;
+                }
+                $event->setResponse(new RedirectResponse("/" . $languageLocale . $actualPath));       
+            }       
         }
-        $event->setResponse(new RedirectResponse("/".$languageLocale.$path));
-         
         
     }
     
@@ -83,7 +79,9 @@ class RedirectionSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array("kernel.request" => array("onKernelRequest",17));
+        return array(
+            'kernel.request' => array(array('onKernelRequest', 17))
+        );
         
     }
     
