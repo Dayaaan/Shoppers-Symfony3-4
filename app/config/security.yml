@@ -34,6 +34,7 @@ security:
                 lifetime: 604800 # 1 week in seconds
                 path:     /
                 always_remember_me: true
+            logout_on_user_change: true    
             logout:
                 path: fos_user_security_logout
             anonymous:    true
